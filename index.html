@@ -8,7 +8,7 @@
     body {
       margin: 0;
       height: 100vh;
-      background: #111;
+      background: #000;
       color: #fff;
       font-family: Arial, sans-serif;
       display: flex;
@@ -18,56 +18,54 @@
       overflow: hidden;
     }
     .container {
-      max-width: 90%;
+      max-width: 85%;
       padding: 30px;
-      background: rgba(0,0,0,0.7);
+      background: rgba(20, 20, 20, 0.85);
       border-radius: 25px;
-      border: 3px solid #c00;
-      box-shadow: 0 0 40px #c00;
+      border: 3px solid #ffcc00;
+      box-shadow: 0 0 40px rgba(255, 204, 0, 0.4);
       position: relative;
       z-index: 1;
     }
     h1 {
-      font-size: 3em;
+      font-size: 2.8em;
       margin: 0.5em 0;
-      color: #ff69b4;
-      text-shadow: 0 0 15px #ff1493;
+      color: #fff;
+      text-shadow: 0 0 15px #ffcc00;
     }
     .buttons {
       margin: 2em 0;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 30px;
     }
     button {
-      font-size: 1.5em;
-      padding: 15px 40px;
+      font-size: 1.6em;
+      padding: 15px 45px;
       margin: 10px;
       border: none;
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.4s ease;
-    }
-    #yes {
-      background: #ff1493;
-      color: white;
       min-width: 140px;
     }
+    #yes {
+      background: #ffcc00;
+      color: #000;
+      font-weight: bold;
+    }
     #yes:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px #ff69b4;
+      transform: scale(1.08);
+      box-shadow: 0 0 25px #ffcc00;
     }
     #no {
-      background: #444;
-      color: #aaa;
-      position: relative;
+      background: #333;
+      color: #fff;
     }
     #no:hover {
-      background: #666;
-      color: white;
-      transform: scale(1.1) rotate(5deg);
-      box-shadow: 0 0 20px #ff1493;
+      background: #555;
+      transform: scale(1.05);
     }
     .heart-bg {
       position: absolute;
@@ -75,35 +73,31 @@
       pointer-events: none;
       z-index: -1;
       background: url('https://github.com/mnsvxzi-design/batman-and-batwomen/blob/main/image.jpg?raw=true') center/cover no-repeat;
-      opacity: 0.35;
-      filter: brightness(0.7);
+      opacity: 0.15;
+      filter: brightness(0.8) hue-rotate(40deg); /* subtle yellow tint */
     }
     .message {
-      font-size: 1.8em;
+      font-size: 1.9em;
       margin-top: 1.5em;
-      color: #ff69b4;
-      min-height: 100px;
+      color: #ffcc00;
+      min-height: 120px;
       line-height: 1.4;
+      text-shadow: 0 0 10px rgba(0,0,0,0.8);
     }
     img.valentine-img {
-      max-width: 80%;
+      max-width: 60%;          /* smaller than before */
+      width: auto;
+      height: auto;
       border-radius: 15px;
-      margin: 1em 0;
-      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+      margin: 1em auto;
+      display: block;
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
     }
 
-    @keyframes shake {
-      0% { transform: translate(1px, 1px) rotate(0deg); }
-      10% { transform: translate(-1px, -2px) rotate(-1deg); }
-      20% { transform: translate(-3px, 0px) rotate(1deg); }
-      30% { transform: translate(3px, 2px) rotate(0deg); }
-      40% { transform: translate(1px, -1px) rotate(1deg); }
-      50% { transform: translate(-1px, 2px) rotate(-1deg); }
-      60% { transform: translate(-3px, 1px) rotate(0deg); }
-      70% { transform: translate(3px, 1px) rotate(-1deg); }
-      80% { transform: translate(-1px, -1px) rotate(1deg); }
-      90% { transform: translate(1px, 2px) rotate(0deg); }
-      100% { transform: translate(1px, -2px) rotate(-1deg); }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
@@ -126,74 +120,34 @@
     const yesBtn = document.getElementById('yes');
     const noBtn = document.getElementById('no');
     const response = document.getElementById('response');
-    const container = document.querySelector('.container');
 
-    let yesClickCount = 0;
+    let noClickCount = 0;
     const maxGrowth = 5;
 
-    // Helper: random position for No button escape
-    function getRandomPos() {
-      const maxX = container.clientWidth - noBtn.offsetWidth - 60;
-      const maxY = container.clientHeight - noBtn.offsetHeight - 60;
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-      return { x, y };
-    }
-
-    // No button runs away
-    noBtn.addEventListener('mouseover', () => {
-      const pos = getRandomPos();
-      noBtn.style.transition = 'all 0.5s ease';
-      noBtn.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${Math.random()*30 - 15}deg) scale(1.15)`;
-    });
-
-    noBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pos = getRandomPos();
-      noBtn.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-      noBtn.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${Math.random()*90 - 45}deg) scale(1.3)`;
-      
-      container.style.animation = 'shake 0.5s';
-      setTimeout(() => { container.style.animation = ''; }, 500);
-
-      response.textContent = "Hey... try the other one 😏🖤";
-      
-      // Grow Yes button when No is clicked
-      if (yesClickCount < maxGrowth) {
-        yesClickCount++;
-        const scale = 1 + (yesClickCount * 0.4); // grows to about 3x size
+    // No button just counts clicks (no movement)
+    noBtn.addEventListener('click', () => {
+      if (noClickCount < maxGrowth) {
+        noClickCount++;
+        const scale = 1 + (noClickCount * 0.4); // grows Yes up to ~3x
         yesBtn.style.transform = `scale(${scale})`;
-        yesBtn.style.padding = `${15 + yesClickCount*8}px ${40 + yesClickCount*15}px`;
-        yesBtn.style.fontSize = `${1.5 + yesClickCount*0.4}em`;
+        yesBtn.style.padding = `${15 + noClickCount*10}px ${45 + noClickCount*20}px`;
+        yesBtn.style.fontSize = `${1.6 + noClickCount*0.4}em`;
       }
+
+      response.textContent = "Come on... you know you want to say Yes 😏🖤";
     });
 
-    // Yes button logic
+    // Yes button shows messages
     yesBtn.addEventListener('click', () => {
-      yesClickCount++;
-
-      if (yesClickCount === 1) {
-        response.innerHTML = "I love you ❤️🦇";
-      } 
-      else if (yesClickCount >= 2 && yesClickCount <= maxGrowth) {
-        response.innerHTML = "I love you ❤️🦇<br>(keep going...)";
-      } 
-      else {
-        // Final message after growth or direct yes after some nos
-        response.innerHTML = 
-          "I love you so much, Catwoman! 🐾❤️<br>" +
-          "I can't wait to spend the rest of my life loving you<br>" +
-          "<strong>- from your lover for life, Batman 🦇</strong>";
-        noBtn.style.display = 'none';
-        yesBtn.style.animation = 'pulse 1.5s infinite';
-        yesBtn.disabled = true;
-        yesBtn.style.cursor = 'default';
-      }
-    });
-
-    // Optional: reset No if mouse leaves
-    document.addEventListener('mouseleave', () => {
-      noBtn.style.transform = 'translate(0, 0) rotate(0deg) scale(1)';
+      response.innerHTML = 
+        "I love you so much, Catwoman! 🐾❤️<br>" +
+        "I can't wait to spend the rest of my life loving you<br>" +
+        "<strong>- from your lover for life, Batman 🦇</strong>";
+      
+      noBtn.style.display = 'none';           // hide No after Yes
+      yesBtn.style.animation = 'pulse 1.5s infinite';
+      yesBtn.disabled = true;
+      yesBtn.style.cursor = 'default';
     });
   </script>
 </body>
