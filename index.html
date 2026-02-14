@@ -3,105 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Catwoman 🐾</title>
+    <title>Will You Be My Valentine?</title>
     <style>
         body {
+            background-color: #121212; /* Dark background like the monitor */
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            background-color: #1a1a1a; 
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Times New Roman', serif;
+            color: #ffdc5e; /* Classic gold/yellow text */
+        }
+
+        .outer-frame {
+            border: 6px solid #ffdc5e;
+            border-radius: 60px 20px 60px 20px; /* Custom shape from your image */
+            padding: 40px;
             text-align: center;
-            color: white;
+            box-shadow: 0 0 30px #ffdc5e; /* The glow effect */
+            max-width: 500px;
+            background: rgba(30, 30, 30, 0.8);
+            position: relative;
         }
-        .container { 
-            background: rgba(43, 43, 43, 0.9); 
-            padding: 30px; 
-            border: 4px solid #ffcc00; 
-            border-radius: 30px; 
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.4); 
-            max-width: 450px;
-            width: 90%;
+
+        .icons {
+            font-size: 24px;
+            margin-bottom: 10px;
         }
-        .hero-img {
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ffdc5e;
+        }
+
+        .couple-img {
             width: 100%;
-            border-radius: 15px;
-            border: 2px solid #ffcc00;
+            max-width: 350px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             margin-bottom: 20px;
         }
-        h1 { color: #ffcc00; font-size: 2rem; margin-bottom: 20px; text-shadow: 2px 2px #000; }
-        #yesBtn {
-            background-color: #ffcc00;
-            color: black;
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
             font-weight: bold;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
+
         #noBtn {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
+            background-color: #333333;
+            color: #ffffff;
         }
-        #message { 
-            display: none; 
-            font-size: 1.6rem; 
-            color: #ffcc00; 
-            font-weight: bold; 
+
+        #yesBtn {
+            background-color: #ffdc5e;
+            color: #000000;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
             line-height: 1.5;
-            animation: fadeIn 1s;
+            color: #ffdc5e;
+            margin-top: 20px;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #finalMessage {
+            display: none;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div style="font-size: 2rem; margin-bottom: 10px;">🦇 💛 🐾</div>
+    <div class="outer-frame">
+        <div class="icons">🦇 💛 🐾</div>
         
-        <img src="couple.png" class="hero-img" alt="Catwoman and Batwoman">
+        <h1 id="question">Will you be my Valentine? ❤️</h1>
 
-        <h1 id="question">Will you be my Valentine?</h1>
-        
-        <div class="buttons" id="btn-group" style="display: flex; justify-content: center; gap: 20px;">
-            <button id="yesBtn" onclick="sayYes()">Yes</button>
-            <button id="noBtn" onclick="growYes()">No</button>
+        <img src="couple.png" alt="Batman and Catwoman" class="couple-img">
+
+        <div class="button-container" id="btnGroup">
+            <button id="noBtn" onmouseover="moveNo()">No</button>
+            <button id="yesBtn" onclick="showLove()">Yes</button>
         </div>
 
-        <div id="message">
-            I love you so much Catwoman! 🐾💛<br>
-            I can't wait to spend the rest of my life loving you.
+        <div class="footer-text">
+            I love you so much Catwoman! 🐾 💛<br>
+            I can't wait to spend the rest of life loving you.
         </div>
+
+        <div id="finalMessage">Yay! I love you forever! 🦇💍🐾</div>
     </div>
 
     <script>
-        let clickCount = 0;
-        let yesSize = 1;
-        
-        function growYes() {
-            clickCount++;
-            yesSize += 0.6; 
-            document.getElementById('yesBtn').style.transform = `scale(${yesSize})`;
-            if (clickCount >= 5) {
-                document.getElementById('noBtn').style.display = 'none';
-            }
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'absolute';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
-        function sayYes() {
-            document.getElementById('btn-group').style.display = 'none';
+        function showLove() {
+            document.getElementById('btnGroup').style.display = 'none';
             document.getElementById('question').style.display = 'none';
-            document.getElementById('message').style.display = 'block';
+            document.getElementById('finalMessage').style.display = 'block';
         }
     </script>
+
 </body>
 </html>
